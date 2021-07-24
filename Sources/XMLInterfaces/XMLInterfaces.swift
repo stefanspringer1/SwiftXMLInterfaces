@@ -6,7 +6,7 @@
 
 import Foundation
 
-public class XMLEventHandler {
+open class XMLEventHandler {
     
     public func documentStart() {}
     
