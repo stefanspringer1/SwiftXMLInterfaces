@@ -8,43 +8,43 @@ import Foundation
 
 open class XMLEventHandler {
     
-    public func documentStart() {}
+    open func documentStart() {}
     
-    public func xmlDeclaration(version: String, encoding: String?, standalone: String?) {}
+    open func xmlDeclaration(version: String, encoding: String?, standalone: String?) {}
     
-    public func documentTypeDeclaration(type: String, publicID: String?, systemID: String?) {}
+    open func documentTypeDeclaration(type: String, publicID: String?, systemID: String?) {}
     
-    public func text(text: String) {}
+    open func text(text: String) {}
     
-    public func cdataSection(text: String) {}
+    open func cdataSection(text: String) {}
     
-    public func comment(text: String) {}
+    open func comment(text: String) {}
     
-    public func elementStart(name: String, attributes: inout [String:String]) {}
+    open func elementStart(name: String, attributes: inout [String:String]) {}
     
-    public func elementEnd(name: String) {}
+    open func elementEnd(name: String) {}
     
-    public func processingInstruction(target: String, content: String?) {}
+    open func processingInstruction(target: String, content: String?) {}
     
-    public func internalEntityDeclaration(name: String, value: String) {}
+    open func internalEntityDeclaration(name: String, value: String) {}
     
-    public func parameterEntityDeclaration(name: String, value: String) {}
+    open func parameterEntityDeclaration(name: String, value: String) {}
     
-    public func externalEntityDeclaration(name: String, publicID:  String?, systemID: String) {}
+    open func externalEntityDeclaration(name: String, publicID:  String?, systemID: String) {}
     
-    public func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String) {}
+    open func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String) {}
     
-    public func notationDeclaration(name: String, publicID:  String?, systemID: String?) {}
+    open func notationDeclaration(name: String, publicID:  String?, systemID: String?) {}
     
-    public func internalEntity(name: String) {}
+    open func internalEntity(name: String) {}
     
-    public func externalEntity(name: String) {}
+    open func externalEntity(name: String) {}
     
-    public func elementDeclaration(text: String) {}
+    open func elementDeclaration(text: String) {}
     
-    public func attributeListDeclaration(text: String) {}
+    open func attributeListDeclaration(text: String) {}
     
-    public func parsingTime(seconds: Double) {}
+    open func parsingTime(seconds: Double) {}
     
-    public func documentEnd() {}
+    open func documentEnd() {}
 }
