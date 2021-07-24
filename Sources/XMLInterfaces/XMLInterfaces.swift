@@ -8,6 +8,8 @@ import Foundation
 
 open class XMLEventHandler {
     
+    public init() {}
+    
     open func documentStart() {}
     
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?) {}
