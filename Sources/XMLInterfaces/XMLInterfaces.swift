@@ -14,7 +14,7 @@ public protocol XMLEventHandler {
     
     func documentTypeDeclaration(type: String, publicID: String?, systemID: String?)
     
-    func text(text: String)
+    func text(text: String, isWhitespace: Bool)
     
     func cdataSection(text: String)
     
@@ -59,7 +59,7 @@ open class DefaultXMLEventHandler: XMLEventHandler {
     
     open func documentTypeDeclaration(type: String, publicID: String?, systemID: String?) {}
     
-    open func text(text: String) {}
+    open func text(text: String, isWhitespace: Bool) {}
     
     open func cdataSection(text: String) {}
     
