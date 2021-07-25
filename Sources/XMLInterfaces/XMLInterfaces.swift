@@ -6,7 +6,50 @@
 
 import Foundation
 
-open class XMLEventHandler {
+public protocol XMLEventHandler {
+    
+    func documentStart()
+    
+    func xmlDeclaration(version: String, encoding: String?, standalone: String?)
+    
+    func documentTypeDeclaration(type: String, publicID: String?, systemID: String?)
+    
+    func text(text: String)
+    
+    func cdataSection(text: String)
+    
+    func comment(text: String)
+    
+    func elementStart(name: String, attributes: inout [String:String])
+    
+    func elementEnd(name: String)
+    
+    func processingInstruction(target: String, content: String?)
+    
+    func internalEntityDeclaration(name: String, value: String)
+    
+    func parameterEntityDeclaration(name: String, value: String)
+    
+    func externalEntityDeclaration(name: String, publicID:  String?, systemID: String)
+    
+    func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String)
+    
+    func notationDeclaration(name: String, publicID:  String?, systemID: String?)
+    
+    func internalEntity(name: String)
+    
+    func externalEntity(name: String)
+    
+    func elementDeclaration(text: String)
+    
+    func attributeListDeclaration(text: String)
+    
+    func parsingTime(seconds: Double)
+    
+    func documentEnd()
+}
+
+open class DefaultXMLEventHandler: XMLEventHandler {
     
     public init() {}
     
