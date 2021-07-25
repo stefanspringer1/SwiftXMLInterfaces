@@ -4,17 +4,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "XMLInterfaces",
+    name: "SwiftXMLInterfaces",
     products: [
         .library(
-            name: "XMLInterfaces",
-            targets: ["XMLInterfaces"]),
+            name: "SwiftXMLInterfaces",
+            targets: ["SwiftXMLInterfaces"]),
     ],
     dependencies: [
     ],
     targets: [
         .target(
-            name: "XMLInterfaces",
+            name: "SwiftXMLInterfaces",
             dependencies: [])
     ]
 )
