@@ -6,6 +6,19 @@
 
 import Foundation
 
+public struct XMLEventHandlerError: LocalizedError {
+    
+    private let message: String
+
+    init(_ message: String) {
+        self.message = message
+    }
+    
+    public var errorDescription: String? {
+        return message
+    }
+}
+
 public protocol XMLEventHandler {
     
     func documentStart()
