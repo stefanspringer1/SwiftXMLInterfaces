@@ -33,7 +33,7 @@ public protocol XMLEventHandler {
     
     func comment(text: String)
     
-    func elementStart(name: String, attributes: inout [String:String])
+    func elementStart(name: String, attributes: inout [String:String], combineTexts: Bool)
     
     func elementEnd(name: String)
     
@@ -78,7 +78,7 @@ open class DefaultXMLEventHandler: XMLEventHandler {
     
     open func comment(text: String) {}
     
-    open func elementStart(name: String, attributes: inout [String:String]) {}
+    open func elementStart(name: String, attributes: inout [String:String], combineTexts: Bool) {}
     
     open func elementEnd(name: String) {}
     
