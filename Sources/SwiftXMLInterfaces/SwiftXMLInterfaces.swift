@@ -20,7 +20,7 @@ public struct XMLEventHandlerError: LocalizedError {
 }
 
 public protocol InternalEntityResolver {
-    func resolve(entityName:String, attributeContext: String?, attributeName: String?)
+    func resolve(entityName:String, attributeContext: String?, attributeName: String?) -> String?
 }
 
 public protocol XMLEventHandler {
