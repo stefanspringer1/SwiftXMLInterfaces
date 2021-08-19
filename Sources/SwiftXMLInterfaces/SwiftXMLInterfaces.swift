@@ -19,6 +19,10 @@ public struct XMLEventHandlerError: LocalizedError {
     }
 }
 
+public protocol InternalEntityResolver {
+    func resolve(entityName:String, attributeContext: String?, attributeName: String?)
+}
+
 public protocol XMLEventHandler {
     
     func documentStart()
