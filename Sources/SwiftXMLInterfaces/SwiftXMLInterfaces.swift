@@ -55,9 +55,9 @@ public protocol XMLEventHandler {
     
     func externalEntity(name: String)
     
-    func elementDeclaration(text: String)
+    func elementDeclaration(name: String, text: String)
     
-    func attributeListDeclaration(text: String)
+    func attributeListDeclaration(elementName: String, text: String)
     
     func parameterEntityDeclaration(name: String, value: String)
     
