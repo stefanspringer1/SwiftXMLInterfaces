@@ -57,7 +57,7 @@ public protocol XMLEventHandler {
     
     func elementDeclaration(name: String, text: String)
     
-    func attributeListDeclaration(elementName: String, text: String)
+    func attributeListDeclaration(name: String, text: String)
     
     func parameterEntityDeclaration(name: String, value: String)
     
@@ -102,7 +102,7 @@ open class DefaultXMLEventHandler: XMLEventHandler {
     
     open func elementDeclaration(name: String, text: String) {}
     
-    open func attributeListDeclaration(elementName: String, text: String) {}
+    open func attributeListDeclaration(name: String, text: String) {}
     
     open func parameterEntityDeclaration(name: String, value: String) {}
     
