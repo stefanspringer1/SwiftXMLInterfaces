@@ -45,8 +45,6 @@ public protocol XMLEventHandler {
     
     func internalEntityDeclaration(name: String, value: String)
     
-    func parameterEntityDeclaration(name: String, value: String)
-    
     func externalEntityDeclaration(name: String, publicID:  String?, systemID: String)
     
     func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String)
@@ -60,6 +58,8 @@ public protocol XMLEventHandler {
     func elementDeclaration(text: String)
     
     func attributeListDeclaration(text: String)
+    
+    func parameterEntityDeclaration(name: String, value: String)
     
     func parsingTime(seconds: Double)
     
@@ -90,8 +90,6 @@ open class DefaultXMLEventHandler: XMLEventHandler {
     
     open func internalEntityDeclaration(name: String, value: String) {}
     
-    open func parameterEntityDeclaration(name: String, value: String) {}
-    
     open func externalEntityDeclaration(name: String, publicID:  String?, systemID: String) {}
     
     open func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String) {}
@@ -102,9 +100,11 @@ open class DefaultXMLEventHandler: XMLEventHandler {
     
     open func externalEntity(name: String) {}
     
-    open func elementDeclaration(text: String) {}
+    open func elementDeclaration(name: String, text: String) {}
     
-    open func attributeListDeclaration(text: String) {}
+    open func attributeListDeclaration(elementName: String, text: String) {}
+    
+    open func parameterEntityDeclaration(name: String, value: String) {}
     
     open func parsingTime(seconds: Double) {}
     
