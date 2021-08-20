@@ -24,11 +24,15 @@ public protocol XMLProduction {
     
     func documentTypeDeclarationAfterInternalSubset(type: String, publicID: String?, systemID: String?, hasInternalSubset: Bool)
     
+    func elementStartBeforeAttributes(name: String, hasAttributes: Bool, isEmpty: Bool)
+    
+    func attribute(name: String, value: String)
+    
     func attributeValue(value: String)
     
-    func elementStart(name: String, attributes: inout [String:String], isEmpty: Bool)
+    func elementStartAfterAttributes(name: String, hasAttributes: Bool, isEmpty: Bool)
     
-    func elementEnd(name: String, isEmpty: Bool)
+    func elementEnd(name: String, hasAttributes: Bool, isEmpty: Bool)
     
     func text(text: String)
     
@@ -100,24 +104,28 @@ open class DefaultXMLProduction: XMLProduction {
         file.write(">\(linebreak)".data(using: .utf8)!)
     }
     
+    open func elementStartBeforeAttributes(name: String, hasAttributes: Bool, isEmpty: Bool) {
+        file.write("<\(name)".data(using: .utf8)!)
+    }
+    
     open func attributeValue(value: String) {
         file.write(escapeDoubleQuotedValue(value).data(using: .utf8)!)
     }
     
-    open func elementStart(name: String, attributes: inout [String:String], isEmpty: Bool) {
-        file.write("<\(name)".data(using: .utf8)!)
-        attributes.values.sorted().forEach { attributeName in
-            file.write(" \(attributeName)=\"".data(using: .utf8)!)
-            attributeValue(value: attributes[attributeName]!)
-            file.write("\"".data(using: .utf8)!)
-        }
+    open func attribute(name: String, value: String) {
+        file.write(" \(name)=\"".data(using: .utf8)!)
+        attributeValue(value: value)
+        file.write("\"".data(using: .utf8)!)
+    }
+    
+    open func elementStartAfterAttributes(name: String, hasAttributes: Bool, isEmpty: Bool) {
         if isEmpty {
             file.write("/".data(using: .utf8)!)
         }
         file.write(">".data(using: .utf8)!)
     }
     
-    open func elementEnd(name: String, isEmpty: Bool) {
+    open func elementEnd(name: String, hasAttributes: Bool, isEmpty: Bool) {
         if !isEmpty {
             file.write("</\(name)>".data(using: .utf8)!)
         }
