@@ -30,7 +30,7 @@ public protocol XMLProduction {
     
     func attribute(name: String, value: String)
     
-    func attributeValue(value: String)
+    func attributeValueEscape(_ value: String) -> String
     
     func elementStartAfterAttributes(name: String, hasAttributes: Bool, isEmpty: Bool)
     
@@ -66,11 +66,12 @@ public protocol XMLProduction {
 }
 
 open class DefaultXMLProduction: XMLProduction {
-    
+
     var file: FileHandle
-    
+
     public func set(file: FileHandle) {
         self.file = file
+        
     }
     
     public init() {
@@ -118,13 +119,13 @@ open class DefaultXMLProduction: XMLProduction {
         file.write("<\(name)".data(using: .utf8)!)
     }
     
-    open func attributeValue(value: String) {
-        file.write(escapeDoubleQuotedValue(value).data(using: .utf8)!)
+    open func attributeValueEscape(_ value: String) -> String {
+        return escapeDoubleQuotedValue(value)
     }
     
     open func attribute(name: String, value: String) {
         file.write(" \(name)=\"".data(using: .utf8)!)
-        attributeValue(value: value)
+        file.write(attributeValueEscape(value).data(using: .utf8)!)
         file.write("\"".data(using: .utf8)!)
     }
     
@@ -141,8 +142,12 @@ open class DefaultXMLProduction: XMLProduction {
         }
     }
     
+    open func textEscape(_ text: String) -> String {
+        return escapeText(text)
+    }
+    
     open func text(text: String) {
-        file.write(escapeText(text).data(using: .utf8)!)
+        file.write(textEscape(text).data(using: .utf8)!)
     }
     
     open func cdataSection(text: String) {
