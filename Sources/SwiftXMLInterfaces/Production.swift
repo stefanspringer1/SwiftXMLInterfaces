@@ -65,9 +65,9 @@ public protocol XMLProduction {
 
 open class DefaultXMLProduction: XMLProduction {
     
-    let file: FileHandle
+    var file: FileHandle = FileHandle.standardOutput
     
-    public init(file: FileHandle) {
+    public func set(file: FileHandle) {
         self.file = file
     }
     
