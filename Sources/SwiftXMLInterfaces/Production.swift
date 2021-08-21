@@ -67,6 +67,10 @@ open class DefaultXMLProduction: XMLProduction {
     
     var file: FileHandle
     
+    public func set(file: FileHandle) {
+        self.file = file
+    }
+    
     public init() {
         self.file = FileHandle.standardOutput
     }
