@@ -60,20 +60,20 @@ public protocol XMLProduction {
 }
 
 open class DefaultXMLProduction: XMLProduction {
-
-    private var formatter: XMLFormatter
     
     private var file: FileHandle
 
-    public func set(formatter: XMLFormatter) {
-        self.formatter = formatter
-    }
-    
     public func set(file: FileHandle) {
         self.file = file
     }
     
-    public init(formatter: XMLFormatter = DefaultXMLFormatter(), file: FileHandle = FileHandle.standardOutput) {
+    private var formatter: XMLFormatter
+    
+    public func set(formatter: XMLFormatter) {
+        self.formatter = formatter
+    }
+    
+    public init(file: FileHandle = FileHandle.standardOutput, formatter: XMLFormatter = DefaultXMLFormatter()) {
         self.formatter = formatter
         self.file = file
     }
