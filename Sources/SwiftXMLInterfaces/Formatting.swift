@@ -51,6 +51,8 @@ public protocol XMLFormatter {
     
     func elementStartBeforeAttributes(name: String, hasAttributes: Bool, isEmpty: Bool) -> String
     
+    func sortedAttributeNames(attributeNames: [String]) -> [String]
+    
     func attribute(name: String, value: String) -> String
     
     func elementStartAfterAttributes(name: String, hasAttributes: Bool, isEmpty: Bool) -> String
@@ -150,6 +152,10 @@ open class DefaultXMLFormatter: XMLFormatter {
     
     open func attributeValue(value: String) -> String {
         return escapeDoubleQuotedValue(value)
+    }
+    
+    open func sortedAttributeNames(attributeNames: [String]) -> [String] {
+        return attributeNames.sorted()
     }
     
     open func attribute(name: String, value: String) -> String {
