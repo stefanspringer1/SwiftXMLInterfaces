@@ -71,6 +71,8 @@ open class DefaultXMLProduction: XMLProduction {
         self.file = file
     }
     
+    public init() {}
+    
     var linebreak = "\n"
     var declarationInInternalSubsetIndentation = " "
     
