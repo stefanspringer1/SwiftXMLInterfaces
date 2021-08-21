@@ -8,6 +8,8 @@ import Foundation
 
 public protocol XMLProduction {
     
+    func set(file: FileHandle)
+    
     func setLinebreak(linebreak: String)
     
     func setDeclarationInInternalSubsetIndentation(indentation: String)
