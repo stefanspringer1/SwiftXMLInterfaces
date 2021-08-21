@@ -95,7 +95,7 @@ open class DefaultXMLProduction: XMLProduction {
     open func documentStart() {}
     
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?) {
-        file.write("<?xml version=\"1.0\"\(encoding != nil ? " encoding=\"\(encoding ?? "?")\"" : "")\"\"\(standalone != nil ? " standalone=\"\(standalone ?? "?")\"" : "")\"?>\(linebreak)".data(using: .utf8)!)
+        file.write("<?xml version=\"1.0\"\(encoding != nil ? " encoding=\"\(encoding ?? "?")\"" : "")\(standalone != nil ? " standalone=\"\(standalone ?? "?")\"" : "")?>\(linebreak)".data(using: .utf8)!)
     }
     
     open func documentTypeDeclarationBeforeInternalSubset(type: String, publicID: String?, systemID: String?, hasInternalSubset: Bool) {
