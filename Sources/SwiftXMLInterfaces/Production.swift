@@ -156,7 +156,7 @@ open class DefaultXMLProduction: XMLProduction {
     }
     
     open func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String) {
-        file.write("\(declarationInInternalSubsetIndentation)<!ENTITY \(name)\(publicID != nil ? " PUBLIC \"\(publicID ?? "")\"" : "SYSTEM") \"\(systemID)\" NDATA \(notation)\(linebreak)>".data(using: .utf8)!)
+        file.write("\(declarationInInternalSubsetIndentation)<!ENTITY \(name)\(publicID != nil ? " PUBLIC \"\(publicID ?? "")\"" : "SYSTEM") \"\(systemID)\" NDATA \(notation)>\(linebreak)".data(using: .utf8)!)
     }
     
     open func notationDeclaration(name: String, publicID:  String?, systemID: String?) {
@@ -164,7 +164,7 @@ open class DefaultXMLProduction: XMLProduction {
     }
     
     open func parameterEntityDeclaration(name: String, value: String) {
-        file.write("\(declarationInInternalSubsetIndentation)<!ENTITY % \(name) \"\(escapeDoubleQuotedValue(value))\">\(linebreak)".data(using: .utf8)!)
+        file.write("\(declarationInInternalSubsetIndentation)<!ENTITY % \(name) \"\(escapeDoubleQuotedValue(value))\"\(linebreak)>".data(using: .utf8)!)
     }
     
     open func elementDeclaration(name: String, text: String) {
