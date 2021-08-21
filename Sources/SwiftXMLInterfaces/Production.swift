@@ -73,9 +73,9 @@ open class DefaultXMLProduction: XMLProduction {
         self.formatter = formatter
     }
     
-    public init(file: FileHandle = FileHandle.standardOutput, formatter: XMLFormatter = DefaultXMLFormatter()) {
-        self.formatter = formatter
-        self.file = file
+    public init(file: FileHandle? = nil, formatter: XMLFormatter? = nil) {
+        self.file = file ?? FileHandle.standardOutput
+        self.formatter = formatter ?? DefaultXMLFormatter()
     }
     
     open func documentStart() {
