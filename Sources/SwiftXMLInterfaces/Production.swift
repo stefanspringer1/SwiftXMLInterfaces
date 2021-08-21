@@ -95,7 +95,7 @@ open class DefaultXMLProduction: XMLProduction {
     open func documentStart() {}
     
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?) {
-        file.write("<?xml version=\"1.0\" encoding=\"\(encoding ?? "UTF-8")\" standalone=\"\(standalone ?? "yes")\"?>\(linebreak)".data(using: .utf8)!)
+        file.write("<?xml version=\"1.0\"\(encoding != nil ? " encoding=\"\(encoding ?? "?")\"" : "")\"\"\(standalone != nil ? " standalone=\"\(standalone ?? "?")\"" : "")\"?>\(linebreak)".data(using: .utf8)!)
     }
     
     open func documentTypeDeclarationBeforeInternalSubset(type: String, publicID: String?, systemID: String?, hasInternalSubset: Bool) {
@@ -103,7 +103,7 @@ open class DefaultXMLProduction: XMLProduction {
     }
     
     open func documentTypeDeclarationInternalSubsetStart() {
-        file.write(" [\(linebreak)".data(using: .utf8)!)
+        file.write("\(linebreak)[\(linebreak)".data(using: .utf8)!)
     }
     
     open func documentTypeDeclarationInternalSubsetEnd() {
