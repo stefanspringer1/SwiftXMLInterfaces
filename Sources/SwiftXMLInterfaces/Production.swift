@@ -131,7 +131,7 @@ open class DefaultXMLProduction: XMLProduction, InitializableWithFile {
     }
     
     @inline(__always)
-    open func write(_ s: String) {
+    public func write(_ s: String) {
         file.write(s.data(using: .utf8)!)
     }
     
