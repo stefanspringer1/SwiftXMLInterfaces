@@ -193,7 +193,7 @@ open class DefaultXMLProduction: XMLProduction, InitializableWithFile {
     }
     
     
-    public func attributeValue(value: String) {
+    open func attributeValue(value: String) {
         write(escapeDoubleQuotedValue(value))
     }
     
