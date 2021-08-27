@@ -6,6 +6,35 @@
 
 import Foundation
 
+public func escapeAll(_ text: String) -> String {
+    return text
+        .replacingOccurrences(of: "&", with: "&amp;")
+        .replacingOccurrences(of: "<", with: "&lt;")
+        .replacingOccurrences(of: ">", with: "&gt;")
+        .replacingOccurrences(of: "\"", with: "&quot;")
+        .replacingOccurrences(of: "'", with: "&apos;")
+}
+
+public func escapeText(_ text: String) -> String {
+    return text
+        .replacingOccurrences(of: "&", with: "&amp;")
+        .replacingOccurrences(of: "<", with: "&lt;")
+}
+
+public func escapeDoubleQuotedValue(_ text: String) -> String {
+    return text
+        .replacingOccurrences(of: "&", with: "&amp;")
+        .replacingOccurrences(of: "<", with: "&lt;")
+        .replacingOccurrences(of: "\"", with: "&quot;")
+}
+
+public func escapeSimpleQuotedValue(_ text: String) -> String {
+    return text
+        .replacingOccurrences(of: "&", with: "&amp;")
+        .replacingOccurrences(of: "<", with: "&lt;")
+        .replacingOccurrences(of: "'", with: "&apos;")
+}
+
 public protocol XMLProduction {
     
     func set(file: FileHandle)
@@ -23,6 +52,10 @@ public protocol XMLProduction {
     func documentTypeDeclarationAfterInternalSubset(type: String, publicID: String?, systemID: String?, hasInternalSubset: Bool)
     
     func elementStartBeforeAttributes(name: String, hasAttributes: Bool, isEmpty: Bool)
+    
+    func attributeValue(value: String)
+    
+    func sortedAttributeNames(attributeNames: [String]) -> [String]
     
     func attribute(name: String, value: String)
     
@@ -67,110 +100,257 @@ open class DefaultXMLProduction: XMLProduction {
         self.file = file
     }
     
-    private var formatter: XMLFormatter
+    private var _linebreak = "\n"
     
-    public func set(formatter: XMLFormatter) {
-        self.formatter = formatter
+    public var linebreak: String {
+            set {
+                _linebreak = newValue
+            }
+            get {
+                return _linebreak
+            }
+        }
+    
+    private var _declarationInInternalSubsetIndentation = " "
+    
+    public var declarationInInternalSubsetIndentation: String {
+            set {
+                _declarationInInternalSubsetIndentation = newValue
+            }
+            get {
+                return _declarationInInternalSubsetIndentation
+            }
+        }
+    
+    public init(file: FileHandle? = nil) {
+        self.file = file ?? FileHandle.standardOutput
     }
     
-    public init(file: FileHandle? = nil, formatter: XMLFormatter? = nil) {
-        self.file = file ?? FileHandle.standardOutput
-        self.formatter = formatter ?? DefaultXMLFormatter()
+    private func write(_ s: String) {
+        file.write(s.data(using: .utf8)!)
     }
     
     open func documentStart() {
-        file.write(formatter.documentStart().data(using: .utf8)!)
+        // -
     }
     
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?) {
-        file.write(formatter.xmlDeclaration(version: version, encoding: encoding, standalone: standalone).data(using: .utf8)!)
+        write("<?xml version=\"1.0\"")
+        if let theEncoding = encoding {
+            write(" encoding=\"")
+            write(theEncoding)
+            write("\"")
+        }
+        if let theStandalone = standalone {
+            write(" standalone=\"")
+            write(theStandalone)
+            write("\"")
+        }
+        write("?>")
+        write(linebreak)
     }
     
     open func documentTypeDeclarationBeforeInternalSubset(type: String, publicID: String?, systemID: String?, hasInternalSubset: Bool) {
-        file.write(formatter.documentTypeDeclarationBeforeInternalSubset(type: type, publicID: publicID, systemID: systemID, hasInternalSubset: hasInternalSubset).data(using: .utf8)!)
+        write("<!DOCTYPE ")
+        write(type)
+        if let thePublicID = publicID {
+            write(" PUBLIC \"")
+            write(thePublicID)
+            write("\"")
+        }
+        if let theSystemID = systemID {
+            if publicID == nil {
+                write(" SYSTEM")
+            }
+            write(" \"")
+            write(theSystemID)
+            write("\"")
+        }
     }
     
     open func documentTypeDeclarationInternalSubsetStart() {
-        file.write(formatter.documentTypeDeclarationInternalSubsetStart().data(using: .utf8)!)
+        write(linebreak)
+        write("[")
+        write(linebreak)
     }
     
     open func documentTypeDeclarationInternalSubsetEnd() {
-        file.write(formatter.documentTypeDeclarationInternalSubsetEnd().data(using: .utf8)!)
+        write("]")
     }
     
     open func documentTypeDeclarationAfterInternalSubset(type: String, publicID: String?, systemID: String?, hasInternalSubset: Bool) {
-        file.write(formatter.documentTypeDeclarationAfterInternalSubset(type: type, publicID: publicID, systemID: systemID, hasInternalSubset: hasInternalSubset).data(using: .utf8)!)
+        write(">")
+        write(linebreak)
     }
     
     open func elementStartBeforeAttributes(name: String, hasAttributes: Bool, isEmpty: Bool) {
-        file.write(formatter.elementStartBeforeAttributes(name: name, hasAttributes: hasAttributes, isEmpty: isEmpty).data(using: .utf8)!)
+        write("<")
+        write(name)
+    }
+    
+    
+    public func attributeValue(value: String) {
+        write(escapeDoubleQuotedValue(value))
+    }
+    
+    open func sortedAttributeNames(attributeNames: [String]) -> [String] {
+        return attributeNames.sorted()
     }
     
     open func attribute(name: String, value: String) {
-        file.write(formatter.attribute(name: name, value: value).data(using: .utf8)!)
+        write(" ")
+        write(name)
+        write("\"")
+        attributeValue(value: value)
+        write("\"")
     }
     
     open func elementStartAfterAttributes(name: String, hasAttributes: Bool, isEmpty: Bool) {
-        file.write(formatter.elementStartAfterAttributes(name: name, hasAttributes: hasAttributes, isEmpty: isEmpty).data(using: .utf8)!)
+        if isEmpty {
+            write("/>")
+        }
+        else {
+            write(">")
+        }
     }
     
     open func elementEnd(name: String, hasAttributes: Bool, isEmpty: Bool) {
-        file.write(formatter.elementEnd(name: name, hasAttributes: hasAttributes, isEmpty: isEmpty).data(using: .utf8)!)
+        if !isEmpty {
+            write("</")
+            write(name)
+            write(">")
+        }
     }
     
     open func text(text: String) {
-        file.write(formatter.text(text: text).data(using: .utf8)!)
+        write(escapeText(text))
     }
     
     open func cdataSection(text: String) {
-        file.write(formatter.cdataSection(text: text).data(using: .utf8)!)
+        write("<![CDATA[")
+        write(text)
+        write("]]>")
     }
     
     open func processingInstruction(target: String, content: String?) {
-        file.write(formatter.processingInstruction(target: target, content: content).data(using: .utf8)!)
+        write("<?")
+        write(target)
+        if let theContent = content {
+            write(" \"")
+            write(theContent)
+            write("\"")
+        }
+        write("?>")
     }
     
     open func comment(text: String) {
-        file.write(formatter.comment(text: text).data(using: .utf8)!)
+      write("<!--")
+      write(text)
+      write("-->")
     }
     
     open func internalEntityDeclaration(name: String, value: String) {
-        file.write(formatter.internalEntityDeclaration(name: name, value: value).data(using: .utf8)!)
+        write(declarationInInternalSubsetIndentation)
+        write("<!ENTITY ")
+        write(name)
+        write(" \"")
+        write(escapeDoubleQuotedValue(value))
+        write(">")
+        write(linebreak)
     }
     
     open func externalEntityDeclaration(name: String, publicID: String?, systemID: String) {
-        file.write(formatter.externalEntityDeclaration(name: name, publicID: publicID, systemID: systemID).data(using: .utf8)!)
+        write(declarationInInternalSubsetIndentation)
+        write("<!ENTITY ")
+        write(name)
+        if let thePublicID = publicID {
+            write("PUBLIC \"")
+            write(thePublicID)
+            write("\" \"")
+        }
+        else {
+            write("SYSTEM \"")
+        }
+        write(systemID)
+        write("\">")
+        write(linebreak)
     }
     
     open func unparsedEntityDeclaration(name: String, publicID: String?, systemID: String, notation: String) {
-        file.write(formatter.unparsedEntityDeclaration(name: name, publicID: publicID, systemID: systemID, notation: notation).data(using: .utf8)!)
+        write(declarationInInternalSubsetIndentation)
+        write("<!ENTITY ")
+        write(name)
+        if let thePublicID = publicID {
+            write("PUBLIC \"")
+            write(thePublicID)
+            write("\" \"")
+        }
+        else {
+            write("SYSTEM \"")
+        }
+        write(systemID)
+        write("\" NDATA ")
+        write(notation)
+        write(">")
+        write(linebreak)
     }
     
     open func notationDeclaration(name: String, publicID: String?, systemID: String?) {
-        file.write(formatter.notationDeclaration(name: name, publicID: publicID, systemID: systemID).data(using: .utf8)!)
+        write(declarationInInternalSubsetIndentation)
+        write("<!NOTATION ")
+        write(name)
+        if let thePublicID = publicID {
+            write("PUBLIC \"")
+            write(thePublicID)
+            write("\"")
+        }
+        if let theSystemID = systemID {
+            if publicID == nil {
+                write(" SYSTEM")
+            }
+            write(" \"")
+            write(theSystemID)
+            write("\"")
+        }
+        write(">")
+        write(linebreak)
     }
     
     open func parameterEntityDeclaration(name: String, value: String) {
-        file.write(formatter.parameterEntityDeclaration(name: name, value: value).data(using: .utf8)!)
+        write(declarationInInternalSubsetIndentation)
+        write("<!ENTITY % ")
+        write(name)
+        write(" \"")
+        write(escapeDoubleQuotedValue(value))
+        write("\">")
+        write(linebreak)
     }
     
     open func elementDeclaration(name: String, text: String) {
-        file.write(formatter.elementDeclaration(name: name, text: text).data(using: .utf8)!)
+        write(declarationInInternalSubsetIndentation)
+        write(text)
+        write(linebreak)
     }
     
     open func attributeListDeclaration(name: String, text: String) {
-        file.write(formatter.attributeListDeclaration(name: name, text: text).data(using: .utf8)!)
+        write(declarationInInternalSubsetIndentation)
+        write(text)
+        write(linebreak)
     }
     
     open func internalEntity(name: String) {
-        file.write(formatter.internalEntity(name: name).data(using: .utf8)!)
+        write("&")
+        write(name)
+        write(";")
     }
     
     open func externalEntity(name: String) {
-        file.write(formatter.externalEntity(name: name).data(using: .utf8)!)
+        write("&")
+        write(name)
+        write(";")
     }
 
     open func documentEnd() {
-        file.write(formatter.documentEnd().data(using: .utf8)!)
+        // -
     }
 }
