@@ -126,11 +126,11 @@ open class DefaultXMLProduction: XMLProduction, InitializableWithFile {
             }
         }
     
-    public required init(file: FileHandle) {
+    required public init(file: FileHandle) {
         self.file = file
     }
     
-    private func write(_ s: String) {
+    open func write(_ s: String) {
         file.write(s.data(using: .utf8)!)
     }
     
