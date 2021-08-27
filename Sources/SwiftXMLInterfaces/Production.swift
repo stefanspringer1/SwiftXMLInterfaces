@@ -92,7 +92,11 @@ public protocol XMLProduction {
     func documentEnd()
 }
 
-open class DefaultXMLProduction: XMLProduction {
+protocol InitializableWithFile {
+    init(file: FileHandle)
+}
+
+open class DefaultXMLProduction: XMLProduction, InitializableWithFile {
     
     private var file: FileHandle
 
@@ -122,8 +126,8 @@ open class DefaultXMLProduction: XMLProduction {
             }
         }
     
-    public init(file: FileHandle? = nil) {
-        self.file = file ?? FileHandle.standardOutput
+    public required init(file: FileHandle) {
+        self.file = file
     }
     
     private func write(_ s: String) {
