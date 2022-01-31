@@ -45,7 +45,7 @@ public protocol XEventHandler {
 
     func cdataSection(text: String)
 
-    func processingInstruction(target: String, content: String?)
+    func processingInstruction(target: String, data: String?)
 
     func comment(text: String)
 
@@ -88,7 +88,7 @@ open class DefaultXEventHandler: XEventHandler {
 
     open func cdataSection(text: String) {}
 
-    open func processingInstruction(target: String, content: String?) {}
+    open func processingInstruction(target: String, data: String?) {}
 
     open func comment(text: String) {}
 
