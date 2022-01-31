@@ -10,7 +10,7 @@ public struct ParseError: LocalizedError {
     
     private let message: String
 
-    init(_ message: String) {
+    public init(_ message: String) {
         self.message = message
     }
     
