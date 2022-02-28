@@ -31,14 +31,14 @@ public enum WhitespaceIndicator {
 
 public struct SourcePosition {
     
+    public let byte: Int
     public let row: Int
     public let column: Int
-    public let byte: Int
     
-    public init(row: Int, column: Int, byte: Int) {
+    public init(byte: Int, row: Int, column: Int) {
+        self.byte = byte
         self.row = row
         self.column = column
-        self.byte = byte
     }
 }
 
