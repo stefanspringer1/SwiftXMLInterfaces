@@ -30,14 +30,27 @@ public enum WhitespaceIndicator {
 }
 
 public struct SourcePosition {
+    
     public let row: Int
     public let column: Int
     public let byte: Int
+    
+    public init(row: Int, column: Int, byte: Int) {
+        self.row = row
+        self.column = column
+        self.byte = byte
+    }
 }
 
 public struct SourceRange {
+    
     public let start: SourcePosition
     public let end: SourcePosition
+    
+    public init(start: SourcePosition, end: SourcePosition) {
+        self.start = start
+        self.end = end
+    }
 }
 
 public protocol XEventHandler {
