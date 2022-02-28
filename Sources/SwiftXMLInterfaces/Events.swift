@@ -32,12 +32,12 @@ public enum WhitespaceIndicator {
 public struct SourcePosition {
     
     public let binaryPosition: Int
-    public let row: Int
+    public let line: Int
     public let column: Int
     
-    public init(binaryPosition: Int, row: Int, column: Int) {
+    public init(binaryPosition: Int, line: Int, column: Int) {
         self.binaryPosition = binaryPosition
-        self.row = row
+        self.line = line
         self.column = column
     }
 }
