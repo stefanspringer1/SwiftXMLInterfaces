@@ -29,43 +29,54 @@ public enum WhitespaceIndicator {
     case UNKNOWN
 }
 
+public struct SourcePosition {
+    let row: Int
+    let column: Int
+    let byte: Int
+}
+
+public struct SourceRange {
+    let start: SourcePosition
+    let end: SourcePosition
+}
+
 public protocol XEventHandler {
 
     func documentStart()
 
-    func xmlDeclaration(version: String, encoding: String?, standalone: String?)
+    func xmlDeclaration(version: String, encoding: String?, standalone: String?, sourceRange: SourceRange)
 
-    func documentTypeDeclaration(type: String, publicID: String?, systemID: String?)
+    func documentTypeDeclaration(type: String, publicID: String?, systemID: String?, sourceRange: SourceRange)
 
-    func elementStart(name: String, attributes: [String:String]?)
+    func elementStart(name: String, attributes: [String:String]?, sourceRange: SourceRange)
 
-    func elementEnd(name: String)
+    func elementEnd(name: String, sourceRange: SourceRange)
 
-    func text(text: String, whitespace: WhitespaceIndicator)
+    func text(text: String, whitespace: WhitespaceIndicator, sourceRange: SourceRange)
 
-    func cdataSection(text: String)
+    func cdataSection(text: String, sourceRange: SourceRange)
 
-    func processingInstruction(target: String, data: String?)
+    func processingInstruction(target: String, data: String?, sourceRange: SourceRange)
 
-    func comment(text: String)
+    func comment(text: String, sourceRange: SourceRange)
 
-    func internalEntityDeclaration(name: String, value: String)
+    func internalEntityDeclaration(name: String, value: String, sourceRange: SourceRange)
 
-    func externalEntityDeclaration(name: String, publicID:  String?, systemID: String)
+    func externalEntityDeclaration(name: String, publicID:  String?, systemID: String, sourceRange: SourceRange)
 
-    func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String)
+    func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String, sourceRange: SourceRange)
 
-    func notationDeclaration(name: String, publicID:  String?, systemID: String?)
+    func notationDeclaration(name: String, publicID:  String?, systemID: String?, sourceRange: SourceRange)
 
-    func internalEntity(name: String)
+    func internalEntity(name: String, sourceRange: SourceRange)
 
-    func externalEntity(name: String)
+    func externalEntity(name: String, sourceRange: SourceRange)
 
-    func elementDeclaration(name: String, literal: String)
+    func elementDeclaration(name: String, literal: String, sourceRange: SourceRange)
 
-    func attributeListDeclaration(name: String, literal: String)
+    func attributeListDeclaration(name: String, literal: String, sourceRange: SourceRange)
 
-    func parameterEntityDeclaration(name: String, value: String)
+    func parameterEntityDeclaration(name: String, value: String, sourceRange: SourceRange)
 
     func documentEnd()
 }
@@ -76,39 +87,39 @@ open class DefaultXEventHandler: XEventHandler {
 
     open func documentStart() {}
 
-    open func xmlDeclaration(version: String, encoding: String?, standalone: String?) {}
+    open func xmlDeclaration(version: String, encoding: String?, standalone: String?, sourceRange: SourceRange) {}
 
-    open func documentTypeDeclaration(type: String, publicID: String?, systemID: String?) {}
+    open func documentTypeDeclaration(type: String, publicID: String?, systemID: String?, sourceRange: SourceRange) {}
 
-    open func elementStart(name: String, attributes: [String:String]?) {}
+    open func elementStart(name: String, attributes: [String:String]?, sourceRange: SourceRange) {}
 
-    open func elementEnd(name: String) {}
+    open func elementEnd(name: String, sourceRange: SourceRange) {}
 
-    open func text(text: String, whitespace: WhitespaceIndicator) {}
+    open func text(text: String, whitespace: WhitespaceIndicator, sourceRange: SourceRange) {}
 
-    open func cdataSection(text: String) {}
+    open func cdataSection(text: String, sourceRange: SourceRange) {}
 
-    open func processingInstruction(target: String, data: String?) {}
+    open func processingInstruction(target: String, data: String?, sourceRange: SourceRange) {}
 
-    open func comment(text: String) {}
+    open func comment(text: String, sourceRange: SourceRange) {}
 
-    open func internalEntityDeclaration(name: String, value: String) {}
+    open func internalEntityDeclaration(name: String, value: String, sourceRange: SourceRange) {}
 
-    open func externalEntityDeclaration(name: String, publicID:  String?, systemID: String) {}
+    open func externalEntityDeclaration(name: String, publicID:  String?, systemID: String, sourceRange: SourceRange) {}
 
-    open func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String) {}
+    open func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String, sourceRange: SourceRange) {}
 
-    open func notationDeclaration(name: String, publicID:  String?, systemID: String?) {}
+    open func notationDeclaration(name: String, publicID:  String?, systemID: String?, sourceRange: SourceRange) {}
 
-    open func internalEntity(name: String) {}
+    open func internalEntity(name: String, sourceRange: SourceRange) {}
 
-    open func externalEntity(name: String) {}
+    open func externalEntity(name: String, sourceRange: SourceRange) {}
 
-    open func elementDeclaration(name: String, literal: String) {}
+    open func elementDeclaration(name: String, literal: String, sourceRange: SourceRange) {}
 
-    open func attributeListDeclaration(name: String, literal: String) {}
+    open func attributeListDeclaration(name: String, literal: String, sourceRange: SourceRange) {}
 
-    open func parameterEntityDeclaration(name: String, value: String) {}
+    open func parameterEntityDeclaration(name: String, value: String, sourceRange: SourceRange) {}
 
     open func documentEnd() {}
 }
