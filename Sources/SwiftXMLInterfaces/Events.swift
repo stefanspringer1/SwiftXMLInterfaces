@@ -29,7 +29,7 @@ public enum WhitespaceIndicator {
     case UNKNOWN
 }
 
-public struct SourcePosition {
+public struct SourcePosition: CustomStringConvertible {
     
     public let binaryPosition: Int
     public let line: Int
@@ -40,9 +40,11 @@ public struct SourcePosition {
         self.line = line
         self.column = column
     }
+    
+    public var description: String { get { "binary \(binaryPosition), line \(line), column \(column)" } }
 }
 
-public struct SourceRange {
+public struct SourceRange: CustomStringConvertible {
     
     public let start: SourcePosition
     public let end: SourcePosition
@@ -51,6 +53,8 @@ public struct SourceRange {
         self.start = start
         self.end = end
     }
+    
+    public var description: String { get { "from \(start) to \(end)" } }
 }
 
 public protocol XEventHandler {
