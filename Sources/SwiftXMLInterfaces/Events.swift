@@ -41,7 +41,7 @@ public struct SourcePosition: CustomStringConvertible {
         self.column = column
     }
     
-    public var description: String { get { "binary \(binaryPosition), line \(line), column \(column)" } }
+    public var description: String { get { "\(line):\(column) (bin. \(binaryPosition))" } }
 }
 
 public struct SourceRange: CustomStringConvertible {
@@ -54,7 +54,7 @@ public struct SourceRange: CustomStringConvertible {
         self.end = end
     }
     
-    public var description: String { get { "from \(start) to \(end)" } }
+    public var description: String { get { "\(start) - \(end)" } }
 }
 
 public protocol XEventHandler {
