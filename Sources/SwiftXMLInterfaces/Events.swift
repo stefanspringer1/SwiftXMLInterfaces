@@ -54,7 +54,7 @@ public struct SourceRange: CustomStringConvertible {
         self.binaryUntil = binaryUntil
     }
     
-    public var description: String { get { "\(startLine):\(startColumn) - \(endLine):\(endColumn) (bin. \(binaryStart)..<\(binaryUntil)" } }
+    public var description: String { get { "\(startLine):\(startColumn) - \(endLine):\(endColumn) (bin. \(binaryStart)..<\(binaryUntil))" } }
 }
 
 public protocol XEventHandler {
