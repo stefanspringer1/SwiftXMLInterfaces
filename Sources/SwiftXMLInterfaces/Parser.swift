@@ -25,9 +25,21 @@ public class ConvenienceParser {
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil
     ) throws {
+        try parse(
+            fromURL: URL(fileURLWithPath: path),
+            sourceInfo: sourceInfo ?? path,
+            eventHandlers: eventHandlers
+        )
+    }
+    
+    public func parse(
+        fromURL url: URL,
+        sourceInfo: String? = nil,
+        eventHandlers: [XEventHandler]? = nil
+    ) throws {
         try autoreleasepool {
-            let data: Data = try Data(contentsOf: URL(fileURLWithPath: path)/*, options: [.alwaysMapped]*/)
-            try parse(fromData: data, sourceInfo: sourceInfo ?? path, eventHandlers: eventHandlers)
+            let data: Data = try Data(contentsOf: url/*, options: [.alwaysMapped]*/)
+            try parse(fromData: data, sourceInfo: sourceInfo ?? url.osPath, eventHandlers: eventHandlers)
         }
     }
     
