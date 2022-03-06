@@ -20,7 +20,7 @@ public struct XEventHandlerError: LocalizedError {
 }
 
 public protocol InternalEntityResolver {
-    func resolve(entityWithName entityName: String, forAttributeName attributeName: String?, atElement elementName: String?) -> String?
+    func resolve(entityWithName entityName: String, forAttributeName attributeName: String?, atElementWithName elementName: String?) -> String?
 }
 
 public enum WhitespaceIndicator {
