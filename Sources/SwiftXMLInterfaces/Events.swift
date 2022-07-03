@@ -120,7 +120,7 @@ open class DefaultXEventHandler: XEventHandler {
     
     open func documentStart() {}
     
-    open func enterExternalDataSource(data: Data) {}
+    open func enterExternalDataSource(data: Data, url: URL?) {}
     
     open func leaveExternalDataSource() {}
 
