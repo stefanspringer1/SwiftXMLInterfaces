@@ -7,7 +7,12 @@
 import Foundation
 
 public protocol Parser {
-    func parse(fromData: Data, sourceInfo: String?, eventHandlers: [XEventHandler]) throws
+    func parse(
+        fromData: Data,
+        sourceInfo: String?,
+        eventHandlers: [XEventHandler],
+        insertExternalParsedEntities: Bool
+    ) throws
 }
 
 public class ConvenienceParser {
