@@ -71,9 +71,9 @@ public protocol XEventHandler {
     
     func documentStart()
     
-    func enterDataSource(data: Data)
+    func enterExternalDataSource(data: Data)
     
-    func leaveDataSource()
+    func leaveExternalDataSource()
 
     func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?)
 
@@ -120,9 +120,9 @@ open class DefaultXEventHandler: XEventHandler {
     
     open func documentStart() {}
     
-    open func enterDataSource(data: Data) {}
+    open func enterExternalDataSource(data: Data) {}
     
-    open func leaveDataSource() {}
+    open func leaveExternalDataSource() {}
 
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?) {}
     
