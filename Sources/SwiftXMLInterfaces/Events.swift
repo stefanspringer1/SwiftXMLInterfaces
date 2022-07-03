@@ -81,7 +81,7 @@ public protocol XEventHandler {
     
     func documentTypeDeclarationEnd(textRange: XTextRange?, dataRange: XDataRange?)
 
-    func elementStart(name: String, attributes: [String:String]?, textRange: XTextRange?, dataRange: XDataRange?)
+    func elementStart(name: String, attributes: [String:String?]?, textRange: XTextRange?, dataRange: XDataRange?)
 
     func elementEnd(name: String, textRange: XTextRange?, dataRange: XDataRange?)
 
@@ -130,7 +130,7 @@ open class DefaultXEventHandler: XEventHandler {
     
     open func documentTypeDeclarationEnd(textRange: XTextRange?, dataRange: XDataRange?) {}
 
-    open func elementStart(name: String, attributes: [String:String]?, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func elementStart(name: String, attributes: [String:String?]?, textRange: XTextRange?, dataRange: XDataRange?) {}
 
     open func elementEnd(name: String, textRange: XTextRange?, dataRange: XDataRange?) {}
 
