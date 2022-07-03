@@ -68,8 +68,12 @@ public struct XDataRange: CustomStringConvertible {
 }
 
 public protocol XEventHandler {
-
+    
     func documentStart()
+    
+    func enterDataSource(data: Data)
+    
+    func leaveDataSource()
 
     func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?)
 
@@ -113,8 +117,12 @@ public protocol XEventHandler {
 open class DefaultXEventHandler: XEventHandler {
 
     public init() {}
-
+    
     open func documentStart() {}
+    
+    open func enterDataSource(data: Data) {}
+    
+    open func leaveDataSource() {}
 
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?) {}
     
