@@ -71,7 +71,7 @@ public protocol XEventHandler {
     
     func documentStart()
     
-    func enterExternalDataSource(data: Data, url: URL?)
+    func enterExternalDataSource(data: Data, entityName: String?, url: URL?)
     
     func leaveExternalDataSource()
 
@@ -120,7 +120,7 @@ open class DefaultXEventHandler: XEventHandler {
     
     open func documentStart() {}
     
-    open func enterExternalDataSource(data: Data, url: URL?) {}
+    open func enterExternalDataSource(data: Data, entityName: String?, url: URL?) {}
     
     open func leaveExternalDataSource() {}
 
