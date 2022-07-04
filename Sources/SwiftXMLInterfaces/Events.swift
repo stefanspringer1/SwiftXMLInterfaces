@@ -120,13 +120,9 @@ open class DefaultXEventHandler: XEventHandler {
     
     open func documentStart() {}
     
-    open func enterInternalDataSource(data: Data, entityName: String) {}
+    open func enterDataSource(data: Data, entityName: String?, url: URL?) {}
     
-    open func leaveInternalDataSource() {}
-    
-    open func enterExternalDataSource(data: Data, entityName: String?, url: URL?) {}
-    
-    open func leaveExternalDataSource() {}
+    open func leaveDataSource() {}
 
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?) {}
     
