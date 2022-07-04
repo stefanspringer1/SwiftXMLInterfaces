@@ -122,7 +122,7 @@ open class DefaultXEventHandler: XEventHandler {
     
     open func documentStart() {}
     
-    open func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func enterInternalDataSource(data: Data, entityName: String) {}
     
     open func enterExternalDataSource(data: Data, entityName: String?, url: URL?) {}
     
