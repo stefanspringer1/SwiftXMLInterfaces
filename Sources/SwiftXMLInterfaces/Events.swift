@@ -71,13 +71,9 @@ public protocol XEventHandler {
     
     func documentStart()
     
-    func enterInternalDataSource(data: Data, entityName: String)
+    func enterDataSource(data: Data, entityName: String?, url: URL?)
     
-    func leaveInternalDataSource()
-    
-    func enterExternalDataSource(data: Data, entityName: String?, url: URL?)
-    
-    func leaveExternalDataSource()
+    func leaveDataSource()
 
     func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?)
 
