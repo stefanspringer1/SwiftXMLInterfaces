@@ -73,7 +73,7 @@ public protocol XEventHandler {
     
     func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?)
     
-    func enterExternalDataSource(data: Data, entityName: String?, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
+    func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
     
     func leaveInternalDataSource()
     
@@ -126,7 +126,7 @@ open class DefaultXEventHandler: XEventHandler {
     
     open func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?) {}
     
-    open func enterExternalDataSource(data: Data, entityName: String?, url: URL?, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?) {}
     
     open func leaveInternalDataSource() {}
     
