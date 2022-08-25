@@ -118,7 +118,7 @@ public protocol XEventHandler {
     func documentEnd()
 }
 
-open class DefaultXEventHandler: XEventHandler {
+open class XDefaultEventHandler: XEventHandler {
 
     public init() {}
     
