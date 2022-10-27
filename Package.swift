@@ -11,7 +11,7 @@ let package = Package(
             targets: ["SwiftXMLInterfaces"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/stefanspringer1/AutoreleasepoolShim", from: "1.0.1"),
+        .package(url: "https://github.com/stefanspringer1/AutoreleasepoolShim", from: "1.0.2"),
     ],
     targets: [
         .target(
