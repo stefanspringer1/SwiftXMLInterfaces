@@ -5,6 +5,7 @@
 //  License: Apache License 2.0
 
 import Foundation
+import AutoreleasepoolShim
 
 public protocol Parser {
     func parse(
