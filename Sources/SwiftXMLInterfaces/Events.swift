@@ -27,6 +27,16 @@ public enum WhitespaceIndicator {
     case WHITESPACE
     case NOT_WHITESPACE
     case UNKNOWN
+    
+    static public func +(left: WhitespaceIndicator, right: WhitespaceIndicator) -> WhitespaceIndicator {
+        if left == .NOT_WHITESPACE || right == .NOT_WHITESPACE {
+            return .NOT_WHITESPACE
+        } else if left == .UNKNOWN || right == .UNKNOWN {
+            return .UNKNOWN
+        } else {
+            return .WHITESPACE
+        }
+    }
 }
 
 public struct XTextRange: CustomStringConvertible {
