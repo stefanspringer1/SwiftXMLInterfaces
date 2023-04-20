@@ -4,7 +4,7 @@
 
 This libray is for some interfaces to be useful in XML projects.
 
-It is published under the Apache License 2.0, please feel free to use it and change it. Any remark or suggestion or pull requests are welcome, see also my contact information on [my website](https://stefanspringer.com).
+This library is published under the Apache License v2.0 with Runtime Library Exception.
 
 ## Important Notes
 
