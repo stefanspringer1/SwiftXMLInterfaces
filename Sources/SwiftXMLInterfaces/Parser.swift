@@ -20,7 +20,7 @@ public protocol Parser {
 }
 
 public enum XDocumentSource {
-    case url(url: URL); case path(path: String); case text(text: String); case data(data: Data)
+    case url(_: URL); case path(_: String); case text(_: String); case data(_: Data)
 }
 
 public class ConvenienceParser {
