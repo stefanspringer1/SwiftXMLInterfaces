@@ -39,25 +39,25 @@ public class ConvenienceParser {
         eventHandlers: [XEventHandler]? = nil
     ) throws {
         switch documentSource {
-        case .url(url: let url):
+        case .url(let url):
             try parse(
                 fromURL: url,
                 sourceInfo: sourceInfo ?? url.osPath,
                 eventHandlers: eventHandlers
             )
-        case .path(path: let path):
+        case .path(let path):
             try parse(
                 fromPath: path,
                 sourceInfo: sourceInfo ?? path,
                 eventHandlers: eventHandlers
             )
-        case .text(text: let text):
+        case .text(let text):
             try parse(
                 fromText: text,
                 sourceInfo: sourceInfo,
                 eventHandlers: eventHandlers
             )
-        case .data(data: let data):
+        case .data(let data):
             try parse(
                 fromData: data,
                 sourceInfo: sourceInfo,
