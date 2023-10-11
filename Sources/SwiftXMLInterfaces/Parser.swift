@@ -19,6 +19,10 @@ public protocol Parser {
     ) throws
 }
 
+public enum XDocumentSource {
+    case url(url: URL); case path(path: String); case text(text: String); case data(data: Data)
+}
+
 public class ConvenienceParser {
     
     let parser: Parser
@@ -27,6 +31,39 @@ public class ConvenienceParser {
     public init(parser: Parser, mainEventHandler: XEventHandler) {
         self.parser = parser
         self.mainEventHandler = mainEventHandler
+    }
+    
+    public func parse(
+        from documentSource: XDocumentSource,
+        sourceInfo: String? = nil,
+        eventHandlers: [XEventHandler]? = nil
+    ) throws {
+        switch documentSource {
+        case .url(url: let url):
+            try parse(
+                fromURL: url,
+                sourceInfo: sourceInfo ?? url.osPath,
+                eventHandlers: eventHandlers
+            )
+        case .path(path: let path):
+            try parse(
+                fromPath: path,
+                sourceInfo: sourceInfo ?? path,
+                eventHandlers: eventHandlers
+            )
+        case .text(text: let text):
+            try parse(
+                fromText: text,
+                sourceInfo: sourceInfo,
+                eventHandlers: eventHandlers
+            )
+        case .data(data: let data):
+            try parse(
+                fromData: data,
+                sourceInfo: sourceInfo,
+                eventHandlers: eventHandlers
+            )
+        }
     }
     
     public func parse(
