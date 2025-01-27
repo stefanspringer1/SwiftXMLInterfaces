@@ -14,4 +14,6 @@ This library is published under the Apache License v2.0 with Runtime Library Exc
 
 ## Documentation
 
-...will be added (if the active repository is not moved yet, see abobe), either in this README file or as code comments.
+If internal entity handlers or external entity handlers are given, texts at the end of the accordings resolutions are added separately before any text that follows. Without internal entity handlers or external entity handlers, according subsequent texts will be combined into one event.
+
+More documentation will be added (if the active repository is not moved yet, see abobe), either in this README file or as code comments.

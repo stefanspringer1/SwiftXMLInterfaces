@@ -17,7 +17,7 @@ public protocol Parser {
         sourceInfo: String?,
         eventHandlers: [XEventHandler],
         internalEntityEventHandlers: [XInternalEntityEventHandler]?,
-        externalEntityEventHandlers: [XInternalEntityEventHandler]?
+        externalEntityEventHandlers: [XExternalEntityEventHandler]?
     ) throws
 }
 
@@ -40,7 +40,7 @@ public class ConvenienceParser {
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
         internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
-        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
+        externalEntityEventHandlers: [XExternalEntityEventHandler]? = nil
     ) throws {
         switch documentSource {
         case .url(let url):
@@ -83,7 +83,7 @@ public class ConvenienceParser {
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
         internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
-        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
+        externalEntityEventHandlers: [XExternalEntityEventHandler]? = nil
     ) throws {
         try parse(
             fromURL: URL(fileURLWithPath: path),
@@ -99,7 +99,7 @@ public class ConvenienceParser {
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
         internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
-        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
+        externalEntityEventHandlers: [XExternalEntityEventHandler]? = nil
     ) throws {
         try autoreleasepool {
             let data: Data = try Data(contentsOf: url/*, options: [.alwaysMapped]*/)
@@ -118,7 +118,7 @@ public class ConvenienceParser {
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
         internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
-        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
+        externalEntityEventHandlers: [XExternalEntityEventHandler]? = nil
     ) throws {
         let _data = text.data(using: .utf8)
         if let data = _data {
@@ -140,7 +140,7 @@ public class ConvenienceParser {
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
         internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
-        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
+        externalEntityEventHandlers: [XExternalEntityEventHandler]? = nil
     ) throws {
         let handlers: [XEventHandler]
         if let theEventHandlers = eventHandlers {
