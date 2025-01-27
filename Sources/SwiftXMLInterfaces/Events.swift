@@ -81,18 +81,26 @@ public struct XDataRange: CustomStringConvertible {
     public var description: String { get { "\(binaryStart)..<\(binaryUntil)" } }
 }
 
+public protocol XInternalEntityEventHandler {
+    
+    func enterInternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
+    
+    func leaveInternalDataSource()
+    
+}
+
+public protocol XExternalEntityEventHandler {
+    
+    func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
+    
+    func leaveExternalDataSource()
+    
+}
+
 public protocol XEventHandler {
     
     func documentStart()
     
-    func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?)
-    
-    func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
-    
-    func leaveInternalDataSource()
-    
-    func leaveExternalDataSource()
-
     func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?)
 
     func documentTypeDeclarationStart(type: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?)
@@ -137,14 +145,6 @@ open class XDefaultEventHandler: XEventHandler {
     public init() {}
     
     open func documentStart() {}
-    
-    open func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?) {}
-    
-    open func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?) {}
-    
-    open func leaveInternalDataSource() {}
-    
-    open func leaveExternalDataSource() {}
 
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?) {}
     
