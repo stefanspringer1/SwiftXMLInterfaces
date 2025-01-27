@@ -38,7 +38,7 @@ public class ConvenienceParser {
         from documentSource: XDocumentSource,
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
-        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .never
+        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
         switch documentSource {
         case .url(let url):
@@ -76,7 +76,7 @@ public class ConvenienceParser {
         fromPath path: String,
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
-        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .never
+        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
         try parse(
             fromURL: URL(fileURLWithPath: path),
@@ -90,7 +90,7 @@ public class ConvenienceParser {
         fromURL url: URL,
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
-        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .never
+        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
         try autoreleasepool {
             let data: Data = try Data(contentsOf: url/*, options: [.alwaysMapped]*/)
@@ -107,7 +107,7 @@ public class ConvenienceParser {
         fromText text: String,
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
-        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .never
+        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
         let _data = text.data(using: .utf8)
         if let data = _data {
@@ -127,7 +127,7 @@ public class ConvenienceParser {
         fromData data: Data,
         sourceInfo: String? = nil,
         eventHandlers: [XEventHandler]? = nil,
-        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .never
+        immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
         let handlers: [XEventHandler]
         if let theEventHandlers = eventHandlers {
