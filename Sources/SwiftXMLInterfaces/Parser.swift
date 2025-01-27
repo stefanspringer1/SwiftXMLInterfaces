@@ -15,7 +15,9 @@ public protocol Parser {
     func parse(
         fromData: Data,
         sourceInfo: String?,
-        eventHandlers: [XEventHandler]
+        eventHandlers: [XEventHandler],
+        internalEntityEventHandlers: [XInternalEntityEventHandler]?,
+        externalEntityEventHandlers: [XInternalEntityEventHandler]?
     ) throws
 }
 
@@ -36,32 +38,42 @@ public class ConvenienceParser {
     public func parse(
         from documentSource: XDocumentSource,
         sourceInfo: String? = nil,
-        eventHandlers: [XEventHandler]? = nil
+        eventHandlers: [XEventHandler]? = nil,
+        internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
+        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
     ) throws {
         switch documentSource {
         case .url(let url):
             try parse(
                 fromURL: url,
                 sourceInfo: sourceInfo ?? url.osPath,
-                eventHandlers: eventHandlers
+                eventHandlers: eventHandlers,
+                internalEntityEventHandlers: internalEntityEventHandlers,
+                externalEntityEventHandlers: externalEntityEventHandlers
             )
         case .path(let path):
             try parse(
                 fromPath: path,
                 sourceInfo: sourceInfo ?? path,
-                eventHandlers: eventHandlers
+                eventHandlers: eventHandlers,
+                internalEntityEventHandlers: internalEntityEventHandlers,
+                externalEntityEventHandlers: externalEntityEventHandlers
             )
         case .text(let text):
             try parse(
                 fromText: text,
                 sourceInfo: sourceInfo,
-                eventHandlers: eventHandlers
+                eventHandlers: eventHandlers,
+                internalEntityEventHandlers: internalEntityEventHandlers,
+                externalEntityEventHandlers: externalEntityEventHandlers
             )
         case .data(let data):
             try parse(
                 fromData: data,
                 sourceInfo: sourceInfo,
-                eventHandlers: eventHandlers
+                eventHandlers: eventHandlers,
+                internalEntityEventHandlers: internalEntityEventHandlers,
+                externalEntityEventHandlers: externalEntityEventHandlers
             )
         }
     }
@@ -69,26 +81,34 @@ public class ConvenienceParser {
     public func parse(
         fromPath path: String,
         sourceInfo: String? = nil,
-        eventHandlers: [XEventHandler]? = nil
+        eventHandlers: [XEventHandler]? = nil,
+        internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
+        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
     ) throws {
         try parse(
             fromURL: URL(fileURLWithPath: path),
             sourceInfo: sourceInfo ?? path,
-            eventHandlers: eventHandlers
+            eventHandlers: eventHandlers,
+            internalEntityEventHandlers: internalEntityEventHandlers,
+            externalEntityEventHandlers: externalEntityEventHandlers
         )
     }
     
     public func parse(
         fromURL url: URL,
         sourceInfo: String? = nil,
-        eventHandlers: [XEventHandler]? = nil
+        eventHandlers: [XEventHandler]? = nil,
+        internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
+        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
     ) throws {
         try autoreleasepool {
             let data: Data = try Data(contentsOf: url/*, options: [.alwaysMapped]*/)
             try parse(
                 fromData: data,
                 sourceInfo: sourceInfo ?? url.osPath,
-                eventHandlers: eventHandlers
+                eventHandlers: eventHandlers,
+                internalEntityEventHandlers: internalEntityEventHandlers,
+                externalEntityEventHandlers: externalEntityEventHandlers
             )
         }
     }
@@ -96,14 +116,18 @@ public class ConvenienceParser {
     public func parse(
         fromText text: String,
         sourceInfo: String? = nil,
-        eventHandlers: [XEventHandler]? = nil
+        eventHandlers: [XEventHandler]? = nil,
+        internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
+        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
     ) throws {
         let _data = text.data(using: .utf8)
         if let data = _data {
             try parse(
                 fromData: data,
                 sourceInfo: sourceInfo,
-                eventHandlers: eventHandlers
+                eventHandlers: eventHandlers,
+                internalEntityEventHandlers: internalEntityEventHandlers,
+                externalEntityEventHandlers: externalEntityEventHandlers
             )
         }
         else {
@@ -114,7 +138,9 @@ public class ConvenienceParser {
     public func parse(
         fromData data: Data,
         sourceInfo: String? = nil,
-        eventHandlers: [XEventHandler]? = nil
+        eventHandlers: [XEventHandler]? = nil,
+        internalEntityEventHandlers: [XInternalEntityEventHandler]? = nil,
+        externalEntityEventHandlers: [XInternalEntityEventHandler]? = nil
     ) throws {
         let handlers: [XEventHandler]
         if let theEventHandlers = eventHandlers {
@@ -126,7 +152,9 @@ public class ConvenienceParser {
         try parser.parse(
             fromData: data,
             sourceInfo: sourceInfo,
-            eventHandlers: handlers
+            eventHandlers: handlers,
+            internalEntityEventHandlers: internalEntityEventHandlers,
+            externalEntityEventHandlers: externalEntityEventHandlers
         )
     }
 
