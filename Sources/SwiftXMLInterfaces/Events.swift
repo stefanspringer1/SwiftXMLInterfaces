@@ -81,7 +81,7 @@ public struct XDataRange: CustomStringConvertible {
     public var description: String { get { "\(binaryStart)..<\(binaryUntil)" } }
 }
 
-public enum RemainingTextHandling {
+public enum TextHandlingNearEntities {
     case immediate; case wait
 }
 
@@ -99,11 +99,9 @@ public protocol XEventHandler {
 
     func elementEnd(name: String, textRange: XTextRange?, dataRange: XDataRange?)
     
-    /// The return value signals if all text should immediately be processed via an event when the external data source finishes.
-    func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?) -> RemainingTextHandling
+    func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
     
-    /// The return value signals if all text should immediately be processed via an event when the internal data source finishes.
-    func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?) -> RemainingTextHandling
+    func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?)
 
     func text(text: String, whitespace: WhitespaceIndicator, textRange: XTextRange?, dataRange: XDataRange?)
 
@@ -154,13 +152,9 @@ open class XDefaultEventHandler: XEventHandler {
 
     open func elementEnd(name: String, textRange: XTextRange?, dataRange: XDataRange?) {}
     
-    open func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?) -> RemainingTextHandling {
-        .wait
-    }
+    open func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?) {}
     
-    open func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?) -> RemainingTextHandling {
-        .wait
-    }
+    open func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?) {}
 
     open func text(text: String, whitespace: WhitespaceIndicator, textRange: XTextRange?, dataRange: XDataRange?) {}
 

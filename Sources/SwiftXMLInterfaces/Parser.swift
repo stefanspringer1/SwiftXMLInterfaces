@@ -15,7 +15,8 @@ public protocol Parser {
     func parse(
         fromData: Data,
         sourceInfo: String?,
-        eventHandlers: [XEventHandler]
+        eventHandlers: [XEventHandler],
+        textHandlingNearEntities: TextHandlingNearEntities
     ) throws
 }
 
@@ -114,7 +115,8 @@ public class ConvenienceParser {
     public func parse(
         fromData data: Data,
         sourceInfo: String? = nil,
-        eventHandlers: [XEventHandler]? = nil
+        eventHandlers: [XEventHandler]? = nil,
+        textHandlingNearEntities: TextHandlingNearEntities = .wait
     ) throws {
         let handlers: [XEventHandler]
         if let theEventHandlers = eventHandlers {
@@ -126,7 +128,8 @@ public class ConvenienceParser {
         try parser.parse(
             fromData: data,
             sourceInfo: sourceInfo,
-            eventHandlers: handlers
+            eventHandlers: handlers,
+            textHandlingNearEntities: textHandlingNearEntities
         )
     }
 
