@@ -81,8 +81,8 @@ public struct XDataRange: CustomStringConvertible {
     public var description: String { get { "\(binaryStart)..<\(binaryUntil)" } }
 }
 
-public enum TextHandlingNearEntities {
-    case immediate; case wait
+public enum ImmediateTextHandlingNearEntities {
+    case always; case atExternalEntities; case atInternalEntities; case never
 }
 
 public protocol XEventHandler {
