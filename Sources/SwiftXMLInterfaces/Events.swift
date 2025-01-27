@@ -83,7 +83,7 @@ public struct XDataRange: CustomStringConvertible {
 
 public protocol XInternalEntityEventHandler {
     
-    func enterInternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
+    func enterInternalDataSource(data: Data, entityName: String?, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
     
     func leaveInternalDataSource()
     
