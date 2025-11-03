@@ -21,7 +21,28 @@ public protocol Parser {
 }
 
 public enum XDocumentSource {
-    case url(_: URL); case path(_: String); case text(_: String); case data(_: Data)
+    
+    case url(_: URL)
+    case path(_: String)
+    case text(_: String)
+    case data(_: Data)
+    
+    func getData() throws -> Data {
+        switch self {
+        case .url(let url):
+            try Data(contentsOf: url/*, options: [.alwaysMapped]*/)
+        case .path(let path):
+            try Data(contentsOf: URL(fileURLWithPath: path)/*, options: [.alwaysMapped]*/)
+        case .text(let text):
+            if let data = text.data(using: .utf8) {
+                data
+            } else {
+                throw ParseError("could not decode to UTF-8 text")
+            }
+        case .data(let data):
+            data
+        }
+    }
 }
 
 public class ConvenienceParser {
@@ -40,36 +61,12 @@ public class ConvenienceParser {
         eventHandlers: [XEventHandler]? = nil,
         immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
-        switch documentSource {
-        case .url(let url):
-            try parse(
-                fromURL: url,
-                sourceInfo: sourceInfo ?? url.osPath,
-                eventHandlers: eventHandlers,
-                immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
-            )
-        case .path(let path):
-            try parse(
-                fromPath: path,
-                sourceInfo: sourceInfo ?? path,
-                eventHandlers: eventHandlers,
-                immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
-            )
-        case .text(let text):
-            try parse(
-                fromText: text,
-                sourceInfo: sourceInfo,
-                eventHandlers: eventHandlers,
-                immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
-            )
-        case .data(let data):
-            try parse(
-                fromData: data,
-                sourceInfo: sourceInfo,
-                eventHandlers: eventHandlers,
-                immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
-            )
-        }
+        try parse(
+            fromData: documentSource.getData(),
+            sourceInfo: sourceInfo,
+            eventHandlers: eventHandlers,
+            immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
+        )
     }
     
     public func parse(
@@ -79,7 +76,7 @@ public class ConvenienceParser {
         immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
         try parse(
-            fromURL: URL(fileURLWithPath: path),
+            from: .path(path),
             sourceInfo: sourceInfo ?? path,
             eventHandlers: eventHandlers,
             immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
@@ -93,9 +90,8 @@ public class ConvenienceParser {
         immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
         try autoreleasepool {
-            let data: Data = try Data(contentsOf: url/*, options: [.alwaysMapped]*/)
             try parse(
-                fromData: data,
+                from: .url(url),
                 sourceInfo: sourceInfo ?? url.osPath,
                 eventHandlers: eventHandlers,
                 immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
@@ -109,18 +105,12 @@ public class ConvenienceParser {
         eventHandlers: [XEventHandler]? = nil,
         immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
-        let _data = text.data(using: .utf8)
-        if let data = _data {
-            try parse(
-                fromData: data,
-                sourceInfo: sourceInfo,
-                eventHandlers: eventHandlers,
-                immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
-            )
-        }
-        else {
-            throw ParseError("fatal error: could not get binary data from text") // should never happen
-        }
+        try parse(
+            from: .text(text),
+            sourceInfo: sourceInfo,
+            eventHandlers: eventHandlers,
+            immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
+        )
     }
     
     public func parse(
