@@ -92,7 +92,7 @@ public protocol XEventHandler {
     
     func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func documentTypeDeclarationStart(type: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
+    func documentTypeDeclarationStart(name: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
     
     func documentTypeDeclarationEnd(textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
@@ -145,7 +145,7 @@ open class XDefaultEventHandler: XEventHandler {
 
     open func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
     
-    open func documentTypeDeclarationStart(type: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
+    open func documentTypeDeclarationStart(name: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
     
     open func documentTypeDeclarationEnd(textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
