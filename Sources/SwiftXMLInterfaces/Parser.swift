@@ -27,7 +27,7 @@ public enum XDocumentSource {
     case text(_: String)
     case data(_: Data)
     
-    func getData() throws -> Data {
+    public func getData() throws -> Data {
         switch self {
         case .url(let url):
             try Data(contentsOf: url/*, options: [.alwaysMapped]*/)
