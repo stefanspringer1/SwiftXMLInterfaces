@@ -85,106 +85,107 @@ public enum ImmediateTextHandlingNearEntities {
     case always; case atExternalEntities; case atInternalEntities; case never
 }
 
+/// If any of the handler methods return `false`, then the processing is aborted.
 public protocol XEventHandler {
     
-    func documentStart()
+    func documentStart() -> Bool
     
-    func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?)
+    func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func documentTypeDeclarationStart(type: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?)
+    func documentTypeDeclarationStart(type: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
     
-    func documentTypeDeclarationEnd(textRange: XTextRange?, dataRange: XDataRange?)
+    func documentTypeDeclarationEnd(textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func elementStart(name: String, attributes: inout [String:String], textRange: XTextRange?, dataRange: XDataRange?)
+    func elementStart(name: String, attributes: inout [String:String], textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func elementEnd(name: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func elementEnd(name: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
     
-    func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)
+    func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
     
-    func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func text(text: String, whitespace: WhitespaceIndicator, textRange: XTextRange?, dataRange: XDataRange?)
+    func text(text: String, whitespace: WhitespaceIndicator, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func cdataSection(text: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func cdataSection(text: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func processingInstruction(target: String, data: String?, textRange: XTextRange?, dataRange: XDataRange?)
+    func processingInstruction(target: String, data: String?, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func comment(text: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func comment(text: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func internalEntityDeclaration(name: String, value: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func internalEntityDeclaration(name: String, value: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func externalEntityDeclaration(name: String, publicID:  String?, systemID: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func externalEntityDeclaration(name: String, publicID:  String?, systemID: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
     
-    func leaveExternalDataSource()
+    func leaveExternalDataSource() -> Bool
     
-    func leaveInternalDataSource()
+    func leaveInternalDataSource() -> Bool
 
-    func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func notationDeclaration(name: String, publicID:  String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?)
+    func notationDeclaration(name: String, publicID:  String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func internalEntity(name: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func internalEntity(name: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func externalEntity(name: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func externalEntity(name: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func elementDeclaration(name: String, literal: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func elementDeclaration(name: String, literal: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func attributeListDeclaration(name: String, literal: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func attributeListDeclaration(name: String, literal: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func parameterEntityDeclaration(name: String, value: String, textRange: XTextRange?, dataRange: XDataRange?)
+    func parameterEntityDeclaration(name: String, value: String, textRange: XTextRange?, dataRange: XDataRange?) -> Bool
 
-    func documentEnd()
+    func documentEnd() -> Bool
 }
 
 open class XDefaultEventHandler: XEventHandler {
 
     public init() {}
     
-    open func documentStart() {}
+    open func documentStart() -> Bool { true }
 
-    open func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func xmlDeclaration(version: String, encoding: String?, standalone: String?, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
     
-    open func documentTypeDeclarationStart(type: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func documentTypeDeclarationStart(type: String, publicID: String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
     
-    open func documentTypeDeclarationEnd(textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func documentTypeDeclarationEnd(textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func elementStart(name: String, attributes: inout [String:String], textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func elementStart(name: String, attributes: inout [String:String], textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func elementEnd(name: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func elementEnd(name: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
     
-    open func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func enterExternalDataSource(data: Data, entityName: String?, systemID: String, url: URL?, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
     
-    open func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func enterInternalDataSource(data: Data, entityName: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func text(text: String, whitespace: WhitespaceIndicator, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func text(text: String, whitespace: WhitespaceIndicator, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func cdataSection(text: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func cdataSection(text: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func processingInstruction(target: String, data: String?, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func processingInstruction(target: String, data: String?, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func comment(text: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func comment(text: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func internalEntityDeclaration(name: String, value: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func internalEntityDeclaration(name: String, value: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func externalEntityDeclaration(name: String, publicID:  String?, systemID: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func externalEntityDeclaration(name: String, publicID:  String?, systemID: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
     
-    open func leaveExternalDataSource() {}
+    open func leaveExternalDataSource() -> Bool { true }
     
-    open func leaveInternalDataSource() {}
+    open func leaveInternalDataSource() -> Bool { true }
 
-    open func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func unparsedEntityDeclaration(name: String, publicID:  String?, systemID: String, notation: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func notationDeclaration(name: String, publicID:  String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func notationDeclaration(name: String, publicID:  String?, systemID: String?, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func internalEntity(name: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func internalEntity(name: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func externalEntity(name: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func externalEntity(name: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func elementDeclaration(name: String, literal: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func elementDeclaration(name: String, literal: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func attributeListDeclaration(name: String, literal: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func attributeListDeclaration(name: String, literal: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func parameterEntityDeclaration(name: String, value: String, textRange: XTextRange?, dataRange: XDataRange?) {}
+    open func parameterEntityDeclaration(name: String, value: String, textRange: XTextRange?, dataRange: XDataRange?)-> Bool { true }
 
-    open func documentEnd() {}
+    open func documentEnd() -> Bool { true }
 }
