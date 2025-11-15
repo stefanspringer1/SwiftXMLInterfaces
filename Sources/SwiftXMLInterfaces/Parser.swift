@@ -9,7 +9,6 @@
 //===----------------------------------------------------------------------===//
 
 import Foundation
-import AutoreleasepoolShim
 
 public protocol Parser {
     func parse(
@@ -37,7 +36,7 @@ public enum XDocumentSource {
             if let data = text.data(using: .utf8) {
                 data
             } else {
-                throw ParseError("could not decode to UTF-8 text")
+                throw ParseError("could not decode assumed UTF-8 text")
             }
         case .data(let data):
             data
@@ -89,14 +88,12 @@ public class ConvenienceParser {
         eventHandlers: [XEventHandler]? = nil,
         immediateTextHandlingNearEntities: ImmediateTextHandlingNearEntities = .atExternalEntities
     ) throws {
-        try autoreleasepool {
-            try parse(
-                from: .url(url),
-                sourceInfo: sourceInfo ?? url.osPath,
-                eventHandlers: eventHandlers,
-                immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
-            )
-        }
+        try parse(
+            from: .url(url),
+            sourceInfo: sourceInfo ?? url.osPath,
+            eventHandlers: eventHandlers,
+            immediateTextHandlingNearEntities: immediateTextHandlingNearEntities
+        )
     }
     
     public func parse(

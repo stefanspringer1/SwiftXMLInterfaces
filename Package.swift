@@ -8,16 +8,12 @@ let package = Package(
     products: [
         .library(
             name: "SwiftXMLInterfaces",
-            targets: ["SwiftXMLInterfaces"]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/stefanspringer1/AutoreleasepoolShim", from: "1.0.3"),
+            targets: ["SwiftXMLInterfaces"]
+        ),
     ],
     targets: [
         .target(
-            name: "SwiftXMLInterfaces",
-            dependencies: [
-                "AutoreleasepoolShim",
-            ])
+            name: "SwiftXMLInterfaces"
+        ),
     ]
 )
