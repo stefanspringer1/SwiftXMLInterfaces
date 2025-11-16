@@ -8,7 +8,11 @@
 //
 //===----------------------------------------------------------------------===//
 
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
 
 enum Platform {
     case macOSIntel
@@ -56,7 +60,7 @@ func pathSeparator() -> String {
 extension URL {
     var osPath: String {
         get {
-            self.path.replacingOccurrences(of: "/", with: pathSeparator())
+            self.path.replacing("/", with: pathSeparator())
         }
     }
 }
