@@ -8,6 +8,8 @@ This repository is _deprecated;_ use the following, currently maintained reposit
 
 https://github.com/swiftxml/SwiftXMLInterfaces
 
+**Note the reset version number!**
+
 ---
 
 ## About This Library
