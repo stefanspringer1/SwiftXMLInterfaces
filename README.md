@@ -1,5 +1,15 @@
 # XMLInterfaces
 
+---
+
+⚠️ **NOTE:**
+
+This package is _deprecated;_ use the following, currently maintained package instead:
+
+https://github.com/swiftxml/SwiftXMLInterfaces
+
+---
+
 ## About This Library
 
 This libray is for some interfaces to be useful in XML projects.
